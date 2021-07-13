@@ -124,7 +124,13 @@ body {
     border: solid 1px hsl(236, 33%, 92%);
     border-radius: 100%;
     margin: 0 16px;
-    appearance: none;
+}
+
+.task-completed-checked {
+    background: url("images/icon-check.svg"), linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
  .list-item-text {
@@ -132,10 +138,15 @@ body {
     color: hsl(235, 19%, 35%);
 }
 
+.complete {
+    text-decoration: line-through;
+}
+
 .task-delete-btn {
     background-image: url("images/icon-cross.svg");
     background-repeat: no-repeat;
-    background-size: 16px;
+    background-size: cover;
+    background-position: center;
     border: none;
     background-color: #fff;
     padding: 0;
