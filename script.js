@@ -1,5 +1,9 @@
+/* *******************************************************
+ --------------- *** VARIABLES *** -----------------
+ ******************************************************* */
+
 // Grabs the todoListTaskInput  with a `todo-task-input` class from the DOM and stores them in a todoListTaskInput variable
-const todoListTaskInput = document.querySelector(`.todo-task-input`);
+const taskInput = document.querySelector(`.task-input`);
 
 // Grabs the todoList container with a `todo-list` class from the DOM and stores them in a todo-list variable
 let todoList = document.querySelector(`.todo-list`);
@@ -9,6 +13,19 @@ let taskCompleteBtns = document.querySelectorAll(`.task-completed-btn`);
 
 // Grabs all buttons with  a `task-delete-btn` class from the DOM and stores them in a taskCompleteBtns variable
 let taskDeleteBtns = document.querySelectorAll(`.task-delete-btn`);
+
+// Grabs the clearCompleted with a `#clearCompleted` ID from the DOM and stores them in a clearCompleted variable
+const clearCompleted = document.querySelector(`#clearCompleted`);
+
+// Grabs the themeToggleBtns with a `theme-toggle-btn` class from the DOM and stores them in a themeToggleBtns variable
+const themeToggleBtns = document.querySelectorAll(`.theme-toggle-btn`);
+
+// Grabs the FilterBtns with a `todo-list-filter-button` class from the DOM and stores them in a FilterBtns variable
+const filterBtns = document.querySelectorAll(`.todo-list-filter-button`);
+
+/* *******************************************************
+ --------------- *** FUNCTIONS *** -----------------
+ ******************************************************* */
 
 // Callback function for the click of a taskCompleteBtn
 // stores the event.currentTarget (button you clicked) within a button variable
@@ -51,18 +68,18 @@ function reloadList() {
 
 // creates a new "li" element and stores it with in listItemEntry variable
 // grabs the listItemEntry variable writes the inner HTML along with passing the TASK variable from  the handleTaskSubmit function
-// Adds the `list-item-container CSS class to the listItemEntry
+// Adds  list-item-container`, `d--f`, `fd--r`, `jc--sb`, `ai--c` CSS class's to the listItemEntry
 // Inserts the new Todo task before the end of the todoList
 // calls the function reloadList
 function addTaskToList(todo) {
   const listItemEntry = document.createElement(`li`);
-  listItemEntry.innerHTML = `<div class="list-item-row">
+  listItemEntry.innerHTML = `<div class="list-item-row d--f fd--r ai--c">
                                 <button class="task-completed-btn"></button>
                                 <p class="list-item-text">${todo}</p>
                             </div>
                             <button class="task-delete-btn"></button>`;
-  listItemEntry.classList.add(`list-item-container`);
-  todoList.insertAdjacentElement(`beforeend`, listItemEntry);
+  listItemEntry.classList.add(`list-item-container`, `d--f`, `fd--r`, `jc--sb`, `ai--c`);
+  todoList.insertAdjacentElement(`afterbegin`, listItemEntry);
   reloadList();
 }
 
@@ -72,14 +89,42 @@ function addTaskToList(todo) {
 // passes the task variable to the function addTaskToList
 function handleTaskSubmit(event) {
   if (event.key === 'Enter') {
-    const task = todoListTaskInput.value;
-    todoListTaskInput.value = '';
+    const task = taskInput.value;
+    taskInput.value = '';
     addTaskToList(task);
   }
 }
 
+// creates a local variable called body and stores the body from the DOM within
+// Grabs the darkModeBtn with a `dark-mode-btn` class from the DOM and stores them in a local darkModeBtn variable
+// Grabs the lightModeBtn with a `light-mode-btn` class from the DOM and stores them in a local lightkModeBtn variable
+// toggles hidden class on both darkModeBtn and lightModeBtn (on/off)
+// toggles the class `light and toggles the class `dark` on the body (on/off)
+function themeToggleHandler() {
+  const body = document.querySelector(`body`);
+  const darkModeBtn = document.querySelector(`.dark-mode-btn`);
+  const lightModeBtn = document.querySelector(`.light-mode-btn`);
+  darkModeBtn.classList.toggle(`hidden`);
+  lightModeBtn.classList.toggle(`hidden`);
+  body.classList.toggle(`light`);
+  body.classList.toggle(`dark`);
+}
+
+// Clear Completed function -- NOT COMPLETE
+function clearCompletedHandler() {
+  console.log(`clicked`);
+}
+
+//loop over btns check for selected class.
+function filterBtnHandler(e) {
+  console.log(e);
+}
+/* *******************************************************
+ --------------- *** EVENT LISTENERS *** -----------------
+ ******************************************************* */
+
 // listens for `Enter` to be pressed on the todoListTaskInput and runs the handleTaskSubmit Function
-todoListTaskInput.addEventListener(`keydown`, handleTaskSubmit);
+taskInput.addEventListener(`keydown`, handleTaskSubmit);
 
 // Loops over all taskCompleteBtns on the Page load and adds eventlistener to listen for click and calls completeTaskHandler function
 taskCompleteBtns.forEach(buttons => {
@@ -89,4 +134,16 @@ taskCompleteBtns.forEach(buttons => {
 // Loops over all taskDeleteBtns on the Page load and adds eventlistener to listen for click and calls deleteTaskHandler function
 taskDeleteBtns.forEach(buttons => {
   buttons.addEventListener(`click`, deleteTaskHandler);
+});
+
+// listens for a `click` on the clearCompleted element and runs the clearCompletedHandler Function
+clearCompleted.addEventListener(`click`, clearCompletedHandler);
+
+// Loops over all themeToggleBtns on the Page load and adds eventlistener to listen for click and calls themeToggleHandler function
+themeToggleBtns.forEach(themeToggleBtn => {
+  themeToggleBtn.addEventListener(`click`, themeToggleHandler);
+});
+
+filterBtns.forEach(filterBtn => {
+  filterBtn.addEventListener(`click`, filterBtnHandler);
 });

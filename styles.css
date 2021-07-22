@@ -1,117 +1,211 @@
-/* Selector Resets */
+/* CSS Variables */
+:root {
+    /* Light Theme Colors */
+    --whiteLT: hsl(100, 100%, 100%);
+    --veryLightGrayLT: hsl(0, 0%, 98%);
+    --veryLightGrayishBlueLT: hsl(236, 33%, 92%);
+    --lightGrayishBlueLT: hsl(233, 11%, 84%);
+    --darkGrayishBlueLT: hsl(236, 9%, 61%);
+    --veryDarkGrayishBlueLT: hsl(235, 19%, 35%);
 
-ul {
-    margin: 0;
-    padding: 0;
-}
-
-li {
-    list-style-type: none;
-}
-
-p {
-    margin: 0;
-}
-
-input:focus {
-    outline: none;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
+    /* Dark Theme Colors*/
+    --veryDarkBlueDT: hsl(235, 21%, 11%);
+    --veryDarkDesaturatedBlueDT: hsl(235, 24%, 19%);
+    --lightGrayishBlueDT: hsl(234, 39%, 85%);
+    --lightGrayishBlueHoverDT : hsl(236, 33%, 92%);
+    --darkGrayishBlueDT: hsl(234, 11%, 52%);
+    --veryDarkGrayishBlueDT: hsl(233, 14%, 35%);
+    --superDarkGrayishBlueDT: hsl(237, 14%, 26%);
 }
 
 /* General Styles */
+
+/* --- Light Mode Color Styles --- */
+body.light {
+    background: url("images/bg-mobile-light.jpg");
+    background-color: var(--veryLightGrayLT);
+    background-repeat: no-repeat;
+}
+
+body.light .input-container,
+body.light .task-input,
+body.light .list-container,
+body.light .task-completed-btn,
+body.light .task-delete-btn,
+body.light .todo-list-filter-container,
+body.light .todo-list-filter-button {
+     background-color: var(--whiteLT);
+}
+
+body.light .task-input,
+body.light .task-input::placeholder {
+    color: var(--darkGrayishBlueLT);
+}
+
+body.light .list-container {
+    box-shadow: 1px 1px 5px var(--darkGrayishBlueLT);
+}
+
+body.light .list-item-container {
+    border-bottom: 1px var(--veryLightGrayishBlueLT) solid;
+}
+
+body.light .list-item-text,
+body.light .task-input {
+    color: var(--veryDarkGrayishBlueLT);
+}
+
+body.light .complete {
+    color: var(--lightGrayishBlueLT);
+}  
+
+body.light .task-completed-btn {
+    border: solid 1px var(--veryLightGrayishBlueLT);
+}
+
+body.light .todo-list-info-text,
+body.light .todo-list-filter-button {
+    color: var(--darkGrayishBlueLT);
+}
+
+body.light .filter-selected {
+    color: #3A7CFD;
+}
+/* --- Light Mode Color Styles END --- */
+
+/* --- Dark Mode Color Styles --- */
+body.dark {
+    background: url("images/bg-mobile-dark.jpg");
+    background-color: var(--veryDarkBlueDT);
+    background-repeat: no-repeat;
+}
+
+body.dark .input-container,
+body.dark .task-input,
+body.dark .list-container,
+body.dark .task-completed-btn,
+body.dark .task-delete-btn,
+body.dark .todo-list-filter-container,
+body.dark .todo-list-filter-button {
+     background-color: var(--veryDarkDesaturatedBlueDT);
+}
+
+body.dark .task-input,
+body.dark .task-input::placeholder {
+    color: var(--darkGrayishBlueDT);
+}
+
+body.dark .list-container {
+    box-shadow: 2px 6px 20px #000;
+
+}
+
+body.dark .list-item-container {
+    border-bottom: solid 1px var(--veryDarkGrayishBlueDT);
+}
+
+body.dark .list-item-text,
+body.dark .task-input {
+    color: var(--lightGrayishBlueDT);
+}
+
+body.dark .complete {
+    color: var(--veryDarkGrayishBlueDT);
+}   
+
+body.dark .task-completed-btn {
+    border: solid 1px var(--veryDarkGrayishBlueDT);
+}
+
+body.dark .filter-selected {
+    color: #3A7CFD;
+}
+
+body.dark .todo-list-info-text {
+    color: var(--veryDarkGrayishBlueDT);
+}
+
+body.dark .todo-list-filter-button {
+color: var(--darkGrayishBlueDT);
+}
+
+/* --- Dark Mode Color Styles End --- */
+
+
+
 body {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 18px;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    height: 100vh;
 }
-
 
 /* Layout Styles */
 .container {
-    width: 100%;
-}
-
-.wrapper {
-    background: url("images/bg-mobile-light.jpg");
-    background-color: hsl(0, 0%, 98%);
-    /*background: url("images/bg-mobile-light.jpg"), linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));*/
-    background-repeat: no-repeat;
-    background-size: contain;
     width: 90%;
-    padding: 0 24px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: 0 auto;
 }
 
 /* Header Styles */
-.heading-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.header {
     width: 100%;
     padding-top: 48px;
     margin-bottom: 36px;
 }
 
-.heading {
+.title{
     font-size: 22px;
     margin: 0;
     color: #fff;
     letter-spacing: 10px;
 }
 
-.dark-mode-btn {
+.theme-toggle-btn {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0,0,0,0);
+    background-size: 100% 100%;
+    border: 0;
     height: 20px;
+    width: 20px;
+}
+
+.dark-mode-btn {
+    background-image: url(images/icon-moon.svg);
+}
+
+.light-mode-btn {
+    background-image: url(images/icon-sun.svg);
 }
 
 /* Task Input Styles */
 .input-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    background: #fff;
     width: 100%;
     border-radius: 5px;
     margin-bottom: 20px;
     max-height: 50px;
     min-height: 50px;
+    font-size: 12px;
 }
 
-.todo-task-input {
-    width: 90%;
+.task-input {
+    width: 80%;
     border: none;
     border-radius: 5px;
 }
 
-.todo-task-input::placeholder {
-    color: hsl(236, 9%, 61%);
-    font-size: 12px;
-}
-
 /* Task List Styles */
+
 .list-container {
     border-radius: 5px;
-    background-color: #fff;
-    width: 100%;
     margin-bottom: 20px;
 }
 
+.list-item-container:first-child {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
 .list-item-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    border-bottom: 1px hsl(236, 33%, 92%) solid;
     max-height: 50px;
     min-height: 50px;
     margin-bottom: 0;
@@ -120,8 +214,6 @@ body {
 .task-completed-btn {
     height:  20px;
     width: 20px;
-    background: #fff;
-    border: solid 1px hsl(236, 33%, 92%);
     border-radius: 100%;
     margin: 0 16px;
 }
@@ -129,13 +221,14 @@ body {
 .task-completed-checked {
     background: url("images/icon-check.svg"), linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 100% 100%;
     background-position: center;
+    height:  20px;
+    width: 20px;
 }
 
  .list-item-text {
     font-size: 10px;
-    color: hsl(235, 19%, 35%);
 }
 
 .complete {
@@ -148,7 +241,6 @@ body {
     background-size: cover;
     background-position: center;
     border: none;
-    background-color: #fff;
     padding: 0;
     height:  16px;
     width: 16px;
@@ -156,46 +248,38 @@ body {
 }
 
 .task-delete-btn:hover,
-.task-completed-btn:hover {
+.task-completed-btn:hover,
+.theme-toggle-btn,
+.todo-list-filter-button {
     cursor: pointer;
 }
 
 .task-completed-btn:disabled {
     cursor: unset;
 }
-.list-item-row, .todo-list-info-container {
-    display: flex;
-    align-items: center;
-}
 
 .todo-list-info-container {
-    justify-content: space-between;
     margin: 0 16px;
     max-height: 50px;
     min-height: 50px;
 }
 
 .todo-list-info-text {
-    color: hsl(236, 9%, 61%);
     font-size: 12px;
 } 
 
 .todo-list-filter-container {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    background: #fff;
     max-height: 50px;
     min-height: 50px;
     margin-bottom: 0;
     border-radius: 5px;
 }
 
-.todo-list-filter-text {
-    color: hsl(236, 9%, 61%);
+.todo-list-filter-button {
+    font-weight: 700;
     font-size: 14px;
+    border: none;
 }
 
 .attribution {
@@ -205,4 +289,44 @@ body {
 
 .attribution a {
     color: hsl(228, 45%, 44%);
+}
+
+/* Reusable Styles */
+.hidden {
+    display: none;
+}
+
+/* --- Media Queries --- */
+@media (min-width:375px) {
+    body.light,
+    body.dark
+     {background-size: contain;}
+}
+
+@media (min-width:500px) {
+    body {
+        max-width: 100%;
+    }
+    body.light {
+        background-image: url(images/bg-desktop-light.jpg);
+        background-size: 100% 250px;
+    }
+    body.dark {
+        background-image: url(images/bg-desktop-dark.jpg);
+        background-size: 100% 250px;
+    }
+
+    .header,
+    .container {
+        max-width: 500px;
+    }
+    
+    .title {
+        font-size: 40px;
+    }
+
+    .task-input {
+        width: 100%;
+    }
+
 }

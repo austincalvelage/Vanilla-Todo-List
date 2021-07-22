@@ -8,69 +8,63 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="flexbox.css">
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="styles.css">
     <title>Frontend Mentor | Todo app</title>
   </head>
 
-  <body>
-    <div class="container">
-      <div class="wrapper">
-        <div class="heading-wrapper">
-          <h1 class="heading">TODO</h1>
-          <a href="#"><img class="dark-mode-btn" src="images/icon-moon.svg" /></a>
-        </div>
-        <div class="input-container">
-          <button class="task-completed-btn" disabled></button>
-          <input class="todo-task-input" type="text" placeholder="Create a new todo..." />
-        </div>
-        <div class="list-container">
-          <ul class="todo-list">
-            <li class="list-item-container">
-              <div class="list-item-row">
-                <button class="task-completed-btn"></button>
-                <p class="list-item-text">Jog Around Park 3x</p>
-              </div>
-              <button class="task-delete-btn"></button>
-            </li>
-            <li class="list-item-container">
-              <div class="list-item-row">
-                <button class="task-completed-btn"></button>
-                <p class="list-item-text">Jog Around Park 3x</p>
-              </div>
-              <button class="task-delete-btn"></button>
-            </li>
-            <li class="list-item-container">
-              <div class="list-item-row">
-                <button class="task-completed-btn"></button>
-                <p class="list-item-text">Jog Around Park 3x</p>
-              </div>
-              <button class="task-delete-btn"></button>
-            </li>
-          </ul>
-          <div class="todo-list-info-container">
-            <p class="todo-list-info-text">0 items left</p>
-            <a href="#">
-              <p class="todo-list-info-text">Clear Completed</p>
-            </a>
-          </div>
-        </div>
-
-        <div class="todo-list-filter-container">
-          <a href="#">
-            <p class="todo-list-filter-text">All</p>
-          </a>
-          <a href="#">
-            <p class="todo-list-filter-text">Active</p>
-          </a>
-          <a href="#">
-            <p class="todo-list-filter-text">Completed</p>
+  <body class="light">
+    <div class="container d--f fd--c">
+      <div class="header d--f fd--r jc--sb ai--c">
+        <h1 class=" title">TODO</h1>
+        <input type="button" class="dark-mode-btn theme-toggle-btn">
+        <input type="button" class="light-mode-btn theme-toggle-btn hidden">
+      </div>
+      <div class="input-container d--f fd--r jc--se ai--c">
+        <button class="task-completed-btn" disabled></button>
+        <input class="task-input" type="text" placeholder="Create a new todo..." />
+      </div>
+      <div class="list-container">
+        <ul class="todo-list">
+          <li class="list-item-container d--f fd--r jc--sb ai--c">
+            <div class="list-item-row d--f fd--r ai--c">
+              <button class="task-completed-btn"></button>
+              <p class="list-item-text">Walk the dog</p>
+            </div>
+            <button class="task-delete-btn"></button>
+          </li>
+          <li class="list-item-container d--f fd--r jc--sb ai--c">
+            <div class="list-item-row d--f fd--r ai--c">
+              <button class="task-completed-btn"></button>
+              <p class="list-item-text">Mow the lawn</p>
+            </div>
+            <button class="task-delete-btn"></button>
+          </li>
+          <li class="list-item-container d--f fd--r jc--sb ai--c">
+            <div class="list-item-row d--f fd--r ai--c">
+              <button class="task-completed-btn"></button>
+              <p class="list-item-text">Take trash to curb</p>
+            </div>
+            <button class="task-delete-btn"></button>
+          </li>
+        </ul>
+        <div class="todo-list-info-container d--f fd--r jc--sb ai--c">
+          <p class="todo-list-info-text">0 items left</p>
+          <a href="#" id="clearCompleted">
+            <p class="todo-list-info-text">Clear Completed</p>
           </a>
         </div>
+      </div>
+      <div class="todo-list-filter-container d--f fd--r jc--se ai--c">
+          <button class="todo-list-filter-button filter-selected">All</button>
+          <button class="todo-list-filter-button">Active</button>
+          <button class="todo-list-filter-button">Completed</button>
       </div>
     </div>
 
 
-    <!--Drag and drop to reorder list-->
+    <!--<p>Drag and drop to reorder list</p>-->
 
     <!--<div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
