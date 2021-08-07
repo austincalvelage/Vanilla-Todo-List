@@ -117,16 +117,16 @@ body.dark .task-completed-btn {
     border: solid 1px var(--veryDarkGrayishBlueDT);
 }
 
-body.dark .filter-selected {
-    color: #3A7CFD;
-}
-
 body.dark .todo-list-info-text {
     color: var(--veryDarkGrayishBlueDT);
 }
 
 body.dark .todo-list-filter-button {
 color: var(--darkGrayishBlueDT);
+}
+
+body.dark .filter-selected {
+    color: #3A7CFD;
 }
 
 /* --- Dark Mode Color Styles End --- */

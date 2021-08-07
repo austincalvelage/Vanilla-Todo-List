@@ -23,6 +23,8 @@ const themeToggleBtns = document.querySelectorAll(`.theme-toggle-btn`);
 // Grabs the FilterBtns with a `todo-list-filter-button` class from the DOM and stores them in a FilterBtns variable
 const filterBtns = document.querySelectorAll(`.todo-list-filter-button`);
 
+const taskItemsText = document.querySelectorAll(`.list-item-text`);
+
 /* *******************************************************
  --------------- *** FUNCTIONS *** -----------------
  ******************************************************* */
@@ -63,6 +65,10 @@ function reloadList() {
 
   taskDeleteBtns.forEach(buttons => {
     buttons.addEventListener(`click`, deleteTaskHandler);
+  });
+
+  filterBtns.forEach(filterBtn => {
+    filterBtn.addEventListener(`click`, filterBtnHandler);
   });
 }
 
@@ -115,9 +121,53 @@ function clearCompletedHandler() {
   console.log(`clicked`);
 }
 
-//loop over btns check for selected class.
+// --------------------------------------------
+// TODO!!!!
+// Give filterBtns individual classes?
+// bypass .foreach loop... easier to resuse function on reload of list?
+// create functions for each sort option..
+function filterComplete() {
+  console.log(`Filtering out uncompleted items...`);
+  return taskItemsText.forEach(item => {
+    if (item.classList.contains('complete')) {
+      item.parentElement.parentElement.classList.remove(`hidden`);
+    } else {
+      item.parentElement.parentElement.classList.add(`hidden`);
+    }
+  });
+}
+
+function filterActive() {
+  if (filterActiveBtn.classList.contains(`filter-selected`)) {
+    console.log(`Filtering out completed items...`);
+    return taskItemsText.forEach(item => {
+      if (!item.classList.contains('complete')) {
+        item.parentElement.parentElement.classList.remove(`hidden`);
+      } else {
+        item.parentElement.parentElement.classList.add(`hidden`);
+      }
+    });
+  }
+}
+
+function filterAll() {
+  if (filterAllBtn.classList.contains(`filter-selected`)) {
+    console.log(`Showing all items...`);
+    return taskItemsText.forEach(item => {
+      item.parentElement.parentElement.classList.remove(`hidden`);
+    });
+  }
+}
+
 function filterBtnHandler(e) {
-  console.log(e);
+  filterBtns.forEach(filterBtn => filterBtn.classList.remove(`filter-selected`));
+  e.currentTarget.classList.add(`filter-selected`);
+  // eslint-disable-next-line no-unused-expressions
+  e.currentTarget.innerHTML === `Completed` ? filterComplete() : null;
+  // eslint-disable-next-line no-unused-expressions
+  e.currentTarget.innerHTML === `Active` ? filterActive() : null;
+  // eslint-disable-next-line no-unused-expressions
+  e.currentTarget.innerHTML === `All` ? filterAll() : null;
 }
 /* *******************************************************
  --------------- *** EVENT LISTENERS *** -----------------
