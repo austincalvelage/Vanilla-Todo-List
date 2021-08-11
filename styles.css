@@ -63,7 +63,8 @@ body.light .task-completed-btn {
     border: solid 1px var(--veryLightGrayishBlueLT);
 }
 
-body.light .todo-list-info-text,
+body.light .tasks-remaining,
+body.light .clear-completed,
 body.light .todo-list-filter-button {
     color: var(--darkGrayishBlueLT);
 }
@@ -117,7 +118,8 @@ body.dark .task-completed-btn {
     border: solid 1px var(--veryDarkGrayishBlueDT);
 }
 
-body.dark .todo-list-info-text {
+body.dark .tasks-remaining,
+body.dark .clear-completed {
     color: var(--veryDarkGrayishBlueDT);
 }
 
@@ -250,7 +252,8 @@ body {
 .task-delete-btn:hover,
 .task-completed-btn:hover,
 .theme-toggle-btn,
-.todo-list-filter-button {
+.todo-list-filter-button,
+.clear-completed {
     cursor: pointer;
 }
 
@@ -264,9 +267,16 @@ body {
     min-height: 50px;
 }
 
-.todo-list-info-text {
+.tasks-remaining,
+.clear-completed {
     font-size: 12px;
 } 
+
+.clear-completed {
+    border: none;
+    background-color: inherit;
+    padding: 0;
+}
 
 .todo-list-filter-container {
     width: 100%;

@@ -1,199 +1,174 @@
 /* *******************************************************
  --------------- *** VARIABLES *** -----------------
  ******************************************************* */
-
-// Grabs the todoListTaskInput  with a `todo-task-input` class from the DOM and stores them in a todoListTaskInput variable
+const body = document.querySelector(`body`);
 const taskInput = document.querySelector(`.task-input`);
-
-// Grabs the todoList container with a `todo-list` class from the DOM and stores them in a todo-list variable
-let todoList = document.querySelector(`.todo-list`);
-
-// Grabs all buttons with  a `task-completed-btn` class from the DOM and stores them in a taskCompleteBtns variable
-let taskCompleteBtns = document.querySelectorAll(`.task-completed-btn`);
-
-// Grabs all buttons with  a `task-delete-btn` class from the DOM and stores them in a taskCompleteBtns variable
-let taskDeleteBtns = document.querySelectorAll(`.task-delete-btn`);
-
-// Grabs the clearCompleted with a `#clearCompleted` ID from the DOM and stores them in a clearCompleted variable
-const clearCompleted = document.querySelector(`#clearCompleted`);
-
-// Grabs the themeToggleBtns with a `theme-toggle-btn` class from the DOM and stores them in a themeToggleBtns variable
-const themeToggleBtns = document.querySelectorAll(`.theme-toggle-btn`);
-
-// Grabs the FilterBtns with a `todo-list-filter-button` class from the DOM and stores them in a FilterBtns variable
-const filterBtns = document.querySelectorAll(`.todo-list-filter-button`);
-
-const taskItemsText = document.querySelectorAll(`.list-item-text`);
+const todoList = document.querySelector(`.todo-list`);
+let tasks = [];
+const tasksRemaining = document.querySelector(`.tasks-remaining`);
+const listItems = document.querySelectorAll(`li`);
 
 /* *******************************************************
  --------------- *** FUNCTIONS *** -----------------
  ******************************************************* */
-
-// Callback function for the click of a taskCompleteBtn
-// stores the event.currentTarget (button you clicked) within a button variable
-// stores the nextElementSibling of the button you clicked into a taskTest variable
-// When taskCompleteBtn clicked adds class of 'task-completed-checked' to the BTN and a class of 'complete' to the taskTest for styling
-function completeTaskHandler(e) {
-  const button = e.target;
-  const taskText = button.nextElementSibling;
-  button.classList.toggle(`task-completed-checked`);
-  taskText.classList.toggle(`complete`);
+// Creates a Task object and stores it with the array of tasks. The object has a task property and a status (default = false) property.
+// adds to beginning of array to match DOM list with unshift
+function createTaskObject(taskItem, isComplete = false) {
+  const taskObj = {
+    task: taskItem,
+    status: isComplete,
+  };
+  tasks.unshift(taskObj);
 }
 
-// Callback function for the click of a deleteTaskBtn
-// stores the event.currentTarget (button you clicked) within a button variable
-// stores the closest (parent) list-item-container of the deleteTaskBtn into a taskItem variable
-// Removes that list-item-container (todo task) from the list
-function deleteTaskHandler(e) {
-  const button = e.target;
-  const taskItem = button.closest(`.list-item-container`);
-  taskItem.remove();
+// Takes in the argument of task from the handleInput function and injects a new list item into the DOM
+function addTaskToList(task) {
+  todoList.insertAdjacentHTML(
+    `afterbegin`,
+    `<li class="list-item-container d--f fd--r jc--sb ai--c">
+    <div class="list-item-row d--f fd--r ai--c">
+      <input type="checkbox" class="task-completed-btn" />
+      <p class="list-item-text">${task}</p>
+    </div>
+    <button class="task-delete-btn"></button>
+  </li>`
+  );
 }
 
-// Updates the todoList variable after a new task is added.
-// Updates the taskCompleteBtn variable after a new task is added.
-// loops over the taskCompleteBtns again due to additional ones being added to page.
-// loops over the taskDeleteBtns again due to additional ones being added to page.
-function reloadList() {
-  todoList = document.querySelector(`.todo-list`);
-  taskCompleteBtns = document.querySelectorAll(`.task-completed-btn`);
-  taskDeleteBtns = document.querySelectorAll(`.task-delete-btn`);
-
-  taskCompleteBtns.forEach(buttons => {
-    buttons.addEventListener(`click`, completeTaskHandler);
-  });
-
-  taskDeleteBtns.forEach(buttons => {
-    buttons.addEventListener(`click`, deleteTaskHandler);
-  });
-
-  filterBtns.forEach(filterBtn => {
-    filterBtn.addEventListener(`click`, filterBtnHandler);
-  });
-}
-
-// creates a new "li" element and stores it with in listItemEntry variable
-// grabs the listItemEntry variable writes the inner HTML along with passing the TASK variable from  the handleTaskSubmit function
-// Adds  list-item-container`, `d--f`, `fd--r`, `jc--sb`, `ai--c` CSS class's to the listItemEntry
-// Inserts the new Todo task before the end of the todoList
-// calls the function reloadList
-function addTaskToList(todo) {
-  const listItemEntry = document.createElement(`li`);
-  listItemEntry.innerHTML = `<div class="list-item-row d--f fd--r ai--c">
-                                <button class="task-completed-btn"></button>
-                                <p class="list-item-text">${todo}</p>
-                            </div>
-                            <button class="task-delete-btn"></button>`;
-  listItemEntry.classList.add(`list-item-container`, `d--f`, `fd--r`, `jc--sb`, `ai--c`);
-  todoList.insertAdjacentElement(`afterbegin`, listItemEntry);
-  reloadList();
-}
-
-// Checks if `Enter` key is pressed on todoListTaskInput Element
-// Stores the value of the todoListTaskInput within the variable task
-// Updates the todoListTaskInput to an empty string so its ready for another task
-// passes the task variable to the function addTaskToList
-function handleTaskSubmit(event) {
-  if (event.key === 'Enter') {
-    const task = taskInput.value;
-    taskInput.value = '';
-    addTaskToList(task);
+// Checks if `Enter` key is pressed'
+// Prevents default of enter key
+// Passes the value of taskInput into CreateTaskObject that makes an object and passes into the array called tasks.
+// Passes the argument of the taskInput into the addTaskToList Function
+// Updates the taskInput to a empty string
+// Updates the task remaining text by grabbing the length of the array of tasks
+function handleTaskInput(event) {
+  if (event.key === `Enter`) {
+    event.preventDefault();
+    createTaskObject(taskInput.value);
+    addTaskToList(taskInput.value);
+    taskInput.value = ``;
+    tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
   }
 }
 
-// creates a local variable called body and stores the body from the DOM within
-// Grabs the darkModeBtn with a `dark-mode-btn` class from the DOM and stores them in a local darkModeBtn variable
-// Grabs the lightModeBtn with a `light-mode-btn` class from the DOM and stores them in a local lightkModeBtn variable
-// toggles hidden class on both darkModeBtn and lightModeBtn (on/off)
-// toggles the class `light and toggles the class `dark` on the body (on/off)
-function themeToggleHandler() {
-  const body = document.querySelector(`body`);
-  const darkModeBtn = document.querySelector(`.dark-mode-btn`);
-  const lightModeBtn = document.querySelector(`.light-mode-btn`);
-  darkModeBtn.classList.toggle(`hidden`);
-  lightModeBtn.classList.toggle(`hidden`);
-  body.classList.toggle(`light`);
-  body.classList.toggle(`dark`);
-}
+// Click Handler callback
+function handleTaskClick(e) {
+  // checks for a taskCompleteBtn click
+  // stores the event.currentTarget (button you clicked) within a button variable
+  // stores the nextElementSibling of the button you clicked into a taskTest variable
+  // When taskCompleteBtn clicked adds class of 'task-completed-checked' to the BTN and a class of 'complete' to the taskTest for styling
+  if (e.target.classList.contains(`task-completed-btn`)) {
+    const button = e.target;
+    const taskText = button.nextElementSibling;
+    button.classList.toggle(`task-completed-checked`);
+    taskText.classList.toggle(`complete`);
 
-// Clear Completed function -- NOT COMPLETE
-function clearCompletedHandler() {
-  console.log(`clicked`);
-}
+    // stores the task object that matches the taskText of the checkbox checked allowing me to access the status property on my object stored in the array.
+    const checkedTask = tasks.find(taskOb => taskOb.task === taskText.textContent);
 
-// --------------------------------------------
-// TODO!!!!
-// Give filterBtns individual classes?
-// bypass .foreach loop... easier to resuse function on reload of list?
-// create functions for each sort option..
-function filterComplete() {
-  console.log(`Filtering out uncompleted items...`);
-  return taskItemsText.forEach(item => {
-    if (item.classList.contains('complete')) {
-      item.parentElement.parentElement.classList.remove(`hidden`);
-    } else {
-      item.parentElement.parentElement.classList.add(`hidden`);
+    // if checked sets task status to true
+    // if unchecked sets task status to false
+    if (e.target.checked) {
+      checkedTask.status = true;
     }
-  });
-}
+    if (!e.target.checked) {
+      checkedTask.status = false;
+    }
 
-function filterActive() {
-  if (filterActiveBtn.classList.contains(`filter-selected`)) {
-    console.log(`Filtering out completed items...`);
-    return taskItemsText.forEach(item => {
-      if (!item.classList.contains('complete')) {
-        item.parentElement.parentElement.classList.remove(`hidden`);
-      } else {
-        item.parentElement.parentElement.classList.add(`hidden`);
+    // filters through tasks and stores objects with a status of true into an array called filterCheckedTasks
+    const filterCheckedTasks = tasks.filter(taskOb => taskOb.status === true);
+
+    // Updates the tasksRemaining element by subtracting "completed aka checked" tasks from total.
+    tasksRemaining.innerHTML = `${tasks.length - filterCheckedTasks.length} Tasks Remaining`;
+  }
+
+  // checks for a delete btn click
+  // stores the event targets closest list item into a variable called taskText and pulls its textContent out uses trim to get rid of white space.
+  // stores the task object that matches the taskText of the deleteBtn clicked allowing me remove that object from the array
+  // removes that index of deleteTask from the tasks array via splice
+  // removes element from DOM and updates TaskRemaining text
+  if (e.target.classList.contains(`task-delete-btn`)) {
+    const taskText = e.target.closest(`li`).textContent.trim();
+    const deleteTask = tasks.find(taskOb => taskOb.task === taskText);
+    tasks.splice(tasks.indexOf(deleteTask), 1);
+    e.target.parentElement.remove();
+    tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
+  }
+
+  // creates a local variable called body and stores the body from the DOM within
+  // Grabs the darkModeBtn with a `dark-mode-btn` class from the DOM and stores them in a local darkModeBtn variable
+  // Grabs the lightModeBtn with a `light-mode-btn` class from the DOM and stores them in a local lightkModeBtn variable
+  // toggles hidden class on both darkModeBtn and lightModeBtn (on/off)
+  // toggles the class `light and toggles the class `dark` on the body (on/off)
+  if (e.target.classList.contains(`theme-toggle-btn`)) {
+    const darkModeBtn = document.querySelector(`.dark-mode-btn`);
+    const lightModeBtn = document.querySelector(`.light-mode-btn`);
+    darkModeBtn.classList.toggle(`hidden`);
+    lightModeBtn.classList.toggle(`hidden`);
+    body.classList.toggle(`light`);
+    body.classList.toggle(`dark`);
+  }
+
+  // Checks for clear-completed btn click
+  // creates local variable FilterCompleted stores an array of objects that aren't checked (status property of false)
+  // creates local variable called checkboxes loops over them, checks if they checked property is true if so removes closest li which is its parent element.
+  // updates task variable to equal Filter completed. (objects with status property of false)
+  if (e.target.classList.contains(`clear-completed`)) {
+    const FilterCompletedTasks = tasks.filter(taskOb => taskOb.status === false);
+    const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        checkbox.closest(`li`).remove();
+      }
+    });
+    return (tasks = FilterCompletedTasks);
+  }
+
+  // create a varaible on whats filtering true/false add to addItemtoList function?
+  if (e.target.getAttribute(`id`) === `filterCompleteBtn`) {
+    const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
+    checkboxes.forEach(checkbox => {
+      checkbox.closest(`li`).classList.remove(`hidden`);
+      if (!checkbox.checked) {
+        checkbox.closest(`li`).classList.add(`hidden`);
       }
     });
   }
-}
 
-function filterAll() {
-  if (filterAllBtn.classList.contains(`filter-selected`)) {
-    console.log(`Showing all items...`);
-    return taskItemsText.forEach(item => {
-      item.parentElement.parentElement.classList.remove(`hidden`);
+  if (e.target.getAttribute(`id`) === `filterActiveBtn`) {
+    const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
+    checkboxes.forEach(checkbox => {
+      checkbox.closest(`li`).classList.remove(`hidden`);
+      if (checkbox.checked) {
+        checkbox.closest(`li`).classList.add(`hidden`);
+      }
+    });
+  }
+  if (e.target.getAttribute(`id`) === `showAllBtn`) {
+    const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
+    checkboxes.forEach(checkbox => {
+      checkbox.closest(`li`).classList.remove(`hidden`);
     });
   }
 }
 
-function filterBtnHandler(e) {
-  filterBtns.forEach(filterBtn => filterBtn.classList.remove(`filter-selected`));
-  e.currentTarget.classList.add(`filter-selected`);
-  // eslint-disable-next-line no-unused-expressions
-  e.currentTarget.innerHTML === `Completed` ? filterComplete() : null;
-  // eslint-disable-next-line no-unused-expressions
-  e.currentTarget.innerHTML === `Active` ? filterActive() : null;
-  // eslint-disable-next-line no-unused-expressions
-  e.currentTarget.innerHTML === `All` ? filterAll() : null;
-}
 /* *******************************************************
  --------------- *** EVENT LISTENERS *** -----------------
  ******************************************************* */
 
 // listens for `Enter` to be pressed on the todoListTaskInput and runs the handleTaskSubmit Function
-taskInput.addEventListener(`keydown`, handleTaskSubmit);
+taskInput.addEventListener(`keydown`, handleTaskInput);
 
-// Loops over all taskCompleteBtns on the Page load and adds eventlistener to listen for click and calls completeTaskHandler function
-taskCompleteBtns.forEach(buttons => {
-  buttons.addEventListener(`click`, completeTaskHandler);
-});
+// Listens for a click on body rather than specific elements due to needing to use Event Delegation
+body.addEventListener(`click`, handleTaskClick);
 
-// Loops over all taskDeleteBtns on the Page load and adds eventlistener to listen for click and calls deleteTaskHandler function
-taskDeleteBtns.forEach(buttons => {
-  buttons.addEventListener(`click`, deleteTaskHandler);
-});
+// if listItems exist on page at load contructs and object the has the properies of task and status then pushes the object into the tasks array.
+if (listItems) {
+  listItems.forEach(listItem => {
+    createTaskObject(listItem.innerText);
+  });
+  tasks.reverse(); // matches order of DOM list
+}
 
-// listens for a `click` on the clearCompleted element and runs the clearCompletedHandler Function
-clearCompleted.addEventListener(`click`, clearCompletedHandler);
-
-// Loops over all themeToggleBtns on the Page load and adds eventlistener to listen for click and calls themeToggleHandler function
-themeToggleBtns.forEach(themeToggleBtn => {
-  themeToggleBtn.addEventListener(`click`, themeToggleHandler);
-});
-
-filterBtns.forEach(filterBtn => {
-  filterBtn.addEventListener(`click`, filterBtnHandler);
-});
+// Displays items remaining in tasks array onto page at load
+tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
