@@ -124,8 +124,11 @@ function handleTaskClick(e) {
     return (tasks = FilterCompletedTasks);
   }
 
-  // create a varaible on whats filtering true/false add to addItemtoList function?
   if (e.target.getAttribute(`id`) === `filterCompleteBtn`) {
+    const filterComplete = document.querySelector(`#filterCompleteBtn`);
+    const prevSelected = document.querySelector(`.filter-selected`);
+    prevSelected.classList.remove(`filter-selected`);
+    filterComplete.classList.add(`filter-selected`);
     const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
     checkboxes.forEach(checkbox => {
       checkbox.closest(`li`).classList.remove(`hidden`);
@@ -136,6 +139,10 @@ function handleTaskClick(e) {
   }
 
   if (e.target.getAttribute(`id`) === `filterActiveBtn`) {
+    const filterActive = document.querySelector(`#filterActiveBtn`);
+    const prevSelected = document.querySelector(`.filter-selected`);
+    prevSelected.classList.remove(`filter-selected`);
+    filterActive.classList.add(`filter-selected`);
     const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
     checkboxes.forEach(checkbox => {
       checkbox.closest(`li`).classList.remove(`hidden`);
@@ -145,6 +152,10 @@ function handleTaskClick(e) {
     });
   }
   if (e.target.getAttribute(`id`) === `showAllBtn`) {
+    const showAll = document.querySelector(`#showAllBtn`);
+    const prevSelected = document.querySelector(`.filter-selected`);
+    prevSelected.classList.remove(`filter-selected`);
+    showAll.classList.add(`filter-selected`);
     const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
     checkboxes.forEach(checkbox => {
       checkbox.closest(`li`).classList.remove(`hidden`);
