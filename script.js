@@ -64,7 +64,7 @@ function handleTaskClick(e) {
     taskText.classList.toggle(`complete`);
 
     // stores the task object that matches the taskText of the checkbox checked allowing me to access the status property on my object stored in the array.
-    const checkedTask = tasks.find(taskOb => taskOb.task === taskText.textContent);
+    const checkedTask = tasks.find(taskOb => taskOb.task.trim() === taskText.textContent);
 
     // if checked sets task status to true
     // if unchecked sets task status to false
