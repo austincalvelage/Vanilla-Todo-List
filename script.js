@@ -40,14 +40,20 @@ function addTaskToList(task) {
 // Passes the value of taskInput into CreateTaskObject that makes an object and passes into the array called tasks.
 // Passes the argument of the taskInput into the addTaskToList Function
 // Updates the taskInput to a empty string
-// Updates the task remaining text by grabbing the length of the array of tasks
+// Checks if tasks that are completed are greater than 0 then subtract amount completed from total tasks and update tasks remaining
+// If above statement is fasle Updates the task remaining text by grabbing the length of the array of tasks
 function handleTaskInput(event) {
   if (event.key === `Enter`) {
     event.preventDefault();
     createTaskObject(taskInput.value);
     addTaskToList(taskInput.value);
     taskInput.value = ``;
-    tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
+    const completedTasks = tasks.filter(taskOb => taskOb.status === true);
+    if (completedTasks.length > 0) {
+      tasksRemaining.innerHTML = `${tasks.length - completedTasks.length} Tasks Remaining`;
+    } else {
+      tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
+    }
   }
 }
 
@@ -114,14 +120,14 @@ function handleTaskClick(e) {
   // creates local variable called checkboxes loops over them, checks if they checked property is true if so removes closest li which is its parent element.
   // updates task variable to equal Filter completed. (objects with status property of false)
   if (e.target.classList.contains(`clear-completed`)) {
-    const FilterCompletedTasks = tasks.filter(taskOb => taskOb.status === false);
+    const filterCompletedTasks = tasks.filter(taskOb => taskOb.status === false);
     const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
     checkboxes.forEach(checkbox => {
       if (checkbox.checked) {
         checkbox.closest(`li`).remove();
       }
     });
-    return (tasks = FilterCompletedTasks);
+    return (tasks = filterCompletedTasks);
   }
 
   if (e.target.getAttribute(`id`) === `filterCompleteBtn`) {
@@ -151,6 +157,7 @@ function handleTaskClick(e) {
       }
     });
   }
+
   if (e.target.getAttribute(`id`) === `showAllBtn`) {
     const showAll = document.querySelector(`#showAllBtn`);
     const prevSelected = document.querySelector(`.filter-selected`);
