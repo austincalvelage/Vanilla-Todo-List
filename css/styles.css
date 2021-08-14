@@ -69,9 +69,6 @@ body.light .todo-list-filter-button {
     color: var(--darkGrayishBlueLT);
 }
 
-body.light .filter-selected {
-    color: #3A7CFD;
-}
 /* --- Light Mode Color Styles END --- */
 
 /* --- Dark Mode Color Styles --- */
@@ -133,6 +130,17 @@ body.dark .filter-selected {
 
 /* --- Dark Mode Color Styles End --- */
 
+/* --- Shared Styles Start --- */
+body.light .filter-selected,
+body.dark .filter-selected {
+    color: #3A7CFD;
+}
+
+body.light .clear-completed:hover,
+body.dark .clear-completed:hover {
+    color: #3A7CFD;
+}
+/* --- Shared Styles End--- */
 
 
 body {
@@ -181,7 +189,9 @@ body {
 
 /* Task Input Styles */
 .input-container {
-    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0, 5fr);
+    align-items: center;
     border-radius: 5px;
     margin-bottom: 20px;
     max-height: 50px;
@@ -190,9 +200,11 @@ body {
 }
 
 .task-input {
-    width: 80%;
     border: none;
     border-radius: 5px;
+    padding: 0;
+    word-wrap:  break-word;
+    word-break: break-all;
 }
 
 /* Task List Styles */
@@ -208,29 +220,35 @@ body {
 }
 
 .list-item-container {
-    max-height: 50px;
-    min-height: 50px;
-    margin-bottom: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr)  minmax(0, 4fr) minmax(0, 1fr);
+    grid-template-rows: minmax(50px, auto);
+    align-items: center;
+    margin: 0;
 }
 
 .task-completed-btn {
-    height:  20px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     width: 20px;
+    height: 20px;
     border-radius: 100%;
-    margin: 0 16px;
+    justify-self: center;
 }
 
-.task-completed-checked {
+.task-completed-btn:checked {
     background: url("images/icon-check.svg"), linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
     background-repeat: no-repeat;
-    background-size: 100% 100%;
     background-position: center;
-    height:  20px;
+    height: 20px;
     width: 20px;
 }
 
  .list-item-text {
     font-size: 10px;
+    max-height: 50px;
+
 }
 
 .complete {
@@ -238,16 +256,19 @@ body {
 }
 
 .task-delete-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     background-image: url("images/icon-cross.svg");
     background-repeat: no-repeat;
-    background-size: cover;
     background-position: center;
     border: none;
     padding: 0;
-    height:  16px;
-    width: 16px;
-    margin-right: 16px;
+    height:  12px;
+    width: 12px;
+    justify-self: center;
 }
+
 
 .task-delete-btn:hover,
 .task-completed-btn:hover,
@@ -262,20 +283,29 @@ body {
 }
 
 .todo-list-info-container {
-    margin: 0 16px;
-    max-height: 50px;
-    min-height: 50px;
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+    grid-template-rows: minmax(50px, auto);
+    align-items: center;
 }
 
 .tasks-remaining,
 .clear-completed {
     font-size: 12px;
 } 
+.tasks-remaining {
+    justify-self: self-start;
+    padding-left: 20px;
+
+}
 
 .clear-completed {
     border: none;
     background-color: inherit;
     padding: 0;
+    justify-self: self-end;
+    padding-right: 20px;
+
 }
 
 .todo-list-filter-container {
@@ -328,15 +358,11 @@ body {
 
     .header,
     .container {
-        max-width: 500px;
+        max-width: 475px;
     }
     
     .title {
         font-size: 40px;
-    }
-
-    .task-input {
-        width: 100%;
     }
 
 }

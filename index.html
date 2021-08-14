@@ -8,9 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="flexbox.css">
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/flexbox.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
     <title>Frontend Mentor | Todo app</title>
   </head>
 
@@ -22,34 +22,29 @@
         <input type="button" class="light-mode-btn theme-toggle-btn hidden">
       </div>
       <div class="input-container d--f fd--r jc--se ai--c">
-        <button class="task-completed-btn" disabled></button>
+        <input type="checkbox" class="task-completed-btn task-completed-btn-disabled" disabled />
         <input class="task-input" type="text" placeholder="Create a new todo..." />
       </div>
       <div class="list-container">
         <ul class="todo-list">
-          <li class="list-item-container d--f fd--r jc--sb ai--c">
-            <div class="list-item-row d--f fd--r ai--c">
-              <input type="checkbox" class="task-completed-btn" />
-              <p class="list-item-text">Walk the dog</p>
-            </div>
+          <li class="list-item-container">
+            <input type="checkbox" class="task-completed-btn" />
+            <p class="list-item-text">Walk the dog</p>
+
             <button class="task-delete-btn"></button>
           </li>
-          <li class="list-item-container d--f fd--r jc--sb ai--c">
-            <div class="list-item-row d--f fd--r ai--c">
-              <input type="checkbox" class="task-completed-btn" />
-              <p class="list-item-text">Mow the lawn</p>
-            </div>
+          <li class="list-item-container">
+            <input type="checkbox" class="task-completed-btn" />
+            <p class="list-item-text">Mow the lawn</p>
             <button class="task-delete-btn"></button>
           </li>
-          <li class="list-item-container d--f fd--r jc--sb ai--c">
-            <div class="list-item-row d--f fd--r ai--c">
-              <input type="checkbox" class="task-completed-btn" />
-              <p class="list-item-text">Take trash to curb</p>
-            </div>
+          <li class="list-item-container">
+            <input type="checkbox" class="task-completed-btn" />
+            <p class="list-item-text">Take trash to curb</p>
             <button class="task-delete-btn"></button>
           </li>
         </ul>
-        <div class="todo-list-info-container d--f fd--r jc--sb ai--c">
+        <div class="todo-list-info-container">
           <p class="tasks-remaining">0 items left</p>
           <button class="clear-completed">Clear Completed</button>
           </a>

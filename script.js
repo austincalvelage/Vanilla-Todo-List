@@ -1,12 +1,15 @@
 /* *******************************************************
  --------------- *** VARIABLES *** -----------------
  ******************************************************* */
+// Grabbing items from DOM
 const body = document.querySelector(`body`);
 const taskInput = document.querySelector(`.task-input`);
 const todoList = document.querySelector(`.todo-list`);
-let tasks = [];
 const tasksRemaining = document.querySelector(`.tasks-remaining`);
 const listItems = document.querySelectorAll(`li`);
+
+// creates empty array called tasks
+let tasks = [];
 
 /* *******************************************************
  --------------- *** FUNCTIONS *** -----------------
@@ -21,18 +24,22 @@ function createTaskObject(taskItem, isComplete = false) {
   tasks.unshift(taskObj);
 }
 
-// Takes in the argument of task from the handleInput function and injects a new list item into the DOM
+// Takes in the argument of task from the handleInput function and injects a new list item into the DOM using insertAdjacentHTML
 function addTaskToList(task) {
   todoList.insertAdjacentHTML(
     `afterbegin`,
-    `<li class="list-item-container d--f fd--r jc--sb ai--c">
-    <div class="list-item-row d--f fd--r ai--c">
+    `<li class="list-item-container">
       <input type="checkbox" class="task-completed-btn" />
       <p class="list-item-text">${task}</p>
-    </div>
     <button class="task-delete-btn"></button>
   </li>`
   );
+}
+
+// Takes in a argument of either true or false
+// runs filter method on the tasks array and stores the filtered out items that pass the condition into a new array
+function filterList(status) {
+  return tasks.filter(taskOb => taskOb.status === status);
 }
 
 // Checks if `Enter` key is pressed'
@@ -48,12 +55,47 @@ function handleTaskInput(event) {
     createTaskObject(taskInput.value);
     addTaskToList(taskInput.value);
     taskInput.value = ``;
-    const completedTasks = tasks.filter(taskOb => taskOb.status === true);
+    const completedTasks = filterList(true);
     if (completedTasks.length > 0) {
-      tasksRemaining.innerHTML = `${tasks.length - completedTasks.length} Tasks Remaining`;
-    } else {
-      tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
+      return (tasksRemaining.innerHTML = `${tasks.length - completedTasks.length} Tasks Remaining`);
     }
+    tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
+  }
+}
+
+// Sort List Function for my event Listener on the Filter Buttons
+// stores the paramenter passed (what your sorting by) inside local variable currentFilter
+// stores the the current DOM element with the `filter-selected` class into a local variable called prevSelected
+// Removes the `filter-selected` class from prevSelected and adds it to currentFilter
+// grabs all checkboxes from the DOM
+// Depending on condition adds and removes classes to hide items according to filter selected
+function sortListBy(sortBy) {
+  const currentFilter = document.querySelector(sortBy);
+  const prevSelected = document.querySelector(`.filter-selected`);
+  prevSelected.classList.remove(`filter-selected`);
+  currentFilter.classList.add(`filter-selected`);
+  const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
+
+  if (currentFilter.getAttribute(`id`) === `filterCompleteBtn`) {
+    checkboxes.forEach(checkbox => {
+      checkbox.closest(`li`).classList.remove(`hidden`);
+      if (!checkbox.checked) {
+        checkbox.closest(`li`).classList.add(`hidden`);
+      }
+    });
+  }
+  if (currentFilter.getAttribute(`id`) === `filterActiveBtn`) {
+    checkboxes.forEach(checkbox => {
+      checkbox.closest(`li`).classList.remove(`hidden`);
+      if (checkbox.checked) {
+        checkbox.closest(`li`).classList.add(`hidden`);
+      }
+    });
+  }
+  if (currentFilter.getAttribute(`id`) === `showAllBtn`) {
+    checkboxes.forEach(checkbox => {
+      checkbox.closest(`li`).classList.remove(`hidden`);
+    });
   }
 }
 
@@ -81,8 +123,8 @@ function handleTaskClick(e) {
       checkedTask.status = false;
     }
 
-    // filters through tasks and stores objects with a status of true into an array called filterCheckedTasks
-    const filterCheckedTasks = tasks.filter(taskOb => taskOb.status === true);
+    // filters through tasks and stores the array of objects with a status of true into an local variable called filterCheckedTasks
+    const filterCheckedTasks = filterList(true);
 
     // Updates the tasksRemaining element by subtracting "completed aka checked" tasks from total.
     tasksRemaining.innerHTML = `${tasks.length - filterCheckedTasks.length} Tasks Remaining`;
@@ -101,6 +143,7 @@ function handleTaskClick(e) {
     tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
   }
 
+  // checks for light/dark mode btn click
   // creates a local variable called body and stores the body from the DOM within
   // Grabs the darkModeBtn with a `dark-mode-btn` class from the DOM and stores them in a local darkModeBtn variable
   // Grabs the lightModeBtn with a `light-mode-btn` class from the DOM and stores them in a local lightkModeBtn variable
@@ -130,43 +173,17 @@ function handleTaskClick(e) {
     return (tasks = filterCompletedTasks);
   }
 
+  // Checks if one of the filter buttons are clicked, calls the function sortListBy with sorting argument
   if (e.target.getAttribute(`id`) === `filterCompleteBtn`) {
-    const filterComplete = document.querySelector(`#filterCompleteBtn`);
-    const prevSelected = document.querySelector(`.filter-selected`);
-    prevSelected.classList.remove(`filter-selected`);
-    filterComplete.classList.add(`filter-selected`);
-    const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
-    checkboxes.forEach(checkbox => {
-      checkbox.closest(`li`).classList.remove(`hidden`);
-      if (!checkbox.checked) {
-        checkbox.closest(`li`).classList.add(`hidden`);
-      }
-    });
+    sortListBy(`#filterCompleteBtn`);
   }
 
   if (e.target.getAttribute(`id`) === `filterActiveBtn`) {
-    const filterActive = document.querySelector(`#filterActiveBtn`);
-    const prevSelected = document.querySelector(`.filter-selected`);
-    prevSelected.classList.remove(`filter-selected`);
-    filterActive.classList.add(`filter-selected`);
-    const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
-    checkboxes.forEach(checkbox => {
-      checkbox.closest(`li`).classList.remove(`hidden`);
-      if (checkbox.checked) {
-        checkbox.closest(`li`).classList.add(`hidden`);
-      }
-    });
+    sortListBy(`#filterActiveBtn`);
   }
 
   if (e.target.getAttribute(`id`) === `showAllBtn`) {
-    const showAll = document.querySelector(`#showAllBtn`);
-    const prevSelected = document.querySelector(`.filter-selected`);
-    prevSelected.classList.remove(`filter-selected`);
-    showAll.classList.add(`filter-selected`);
-    const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
-    checkboxes.forEach(checkbox => {
-      checkbox.closest(`li`).classList.remove(`hidden`);
-    });
+    sortListBy(`#showAllBtn`);
   }
 }
 
@@ -186,7 +203,5 @@ if (listItems) {
     createTaskObject(listItem.innerText);
   });
   tasks.reverse(); // matches order of DOM list
+  tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
 }
-
-// Displays items remaining in tasks array onto page at load
-tasksRemaining.innerHTML = `${tasks.length} Tasks Remaining`;
