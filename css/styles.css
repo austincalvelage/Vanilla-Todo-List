@@ -22,7 +22,7 @@
 
 /* --- Light Mode Color Styles --- */
 body.light {
-    background: url("images/bg-mobile-light.jpg");
+    background: url("../images/bg-mobile-light.jpg");
     background-color: var(--veryLightGrayLT);
     background-repeat: no-repeat;
 }
@@ -73,7 +73,7 @@ body.light .todo-list-filter-button {
 
 /* --- Dark Mode Color Styles --- */
 body.dark {
-    background: url("images/bg-mobile-dark.jpg");
+    background: url("../images/bg-mobile-dark.jpg");
     background-color: var(--veryDarkBlueDT);
     background-repeat: no-repeat;
 }
@@ -180,11 +180,11 @@ body {
 }
 
 .dark-mode-btn {
-    background-image: url(images/icon-moon.svg);
+    background-image: url(../images/icon-moon.svg);
 }
 
 .light-mode-btn {
-    background-image: url(images/icon-sun.svg);
+    background-image: url(../images/icon-sun.svg);
 }
 
 /* Task Input Styles */
@@ -238,7 +238,7 @@ body {
 }
 
 .task-completed-btn:checked {
-    background: url("images/icon-check.svg"), linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+    background: url("../images/icon-check.svg"), linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
     background-repeat: no-repeat;
     background-position: center;
     height: 20px;
@@ -259,7 +259,7 @@ body {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image: url("images/icon-cross.svg");
+    background-image: url("../images/icon-cross.svg");
     background-repeat: no-repeat;
     background-position: center;
     border: none;
@@ -348,11 +348,11 @@ body {
         max-width: 100%;
     }
     body.light {
-        background-image: url(images/bg-desktop-light.jpg);
+        background-image: url(../images/bg-desktop-light.jpg);
         background-size: 100% 250px;
     }
     body.dark {
-        background-image: url(images/bg-desktop-dark.jpg);
+        background-image: url(../images/bg-desktop-dark.jpg);
         background-size: 100% 250px;
     }
 

@@ -29,7 +29,7 @@ function addTaskToList(task) {
   todoList.insertAdjacentHTML(
     `afterbegin`,
     `<li class="list-item-container">
-      <input type="checkbox" class="task-completed-btn" />
+      <input type="checkbox" class="task-completed-btn checkbox" />
       <p class="list-item-text">${task}</p>
     <button class="task-delete-btn"></button>
   </li>`
@@ -74,27 +74,27 @@ function sortListBy(sortBy) {
   const prevSelected = document.querySelector(`.filter-selected`);
   prevSelected.classList.remove(`filter-selected`);
   currentFilter.classList.add(`filter-selected`);
-  const checkboxes = document.querySelectorAll(`[type="checkbox"]`);
+  const checkboxes = document.querySelectorAll(`.checkbox`);
 
   if (currentFilter.getAttribute(`id`) === `filterCompleteBtn`) {
     checkboxes.forEach(checkbox => {
-      checkbox.closest(`li`).classList.remove(`hidden`);
+      checkbox.parentElement.classList.remove(`hidden`);
       if (!checkbox.checked) {
-        checkbox.closest(`li`).classList.add(`hidden`);
+        checkbox.parentElement.classList.add(`hidden`);
       }
     });
   }
   if (currentFilter.getAttribute(`id`) === `filterActiveBtn`) {
     checkboxes.forEach(checkbox => {
-      checkbox.closest(`li`).classList.remove(`hidden`);
+      checkbox.parentElement.classList.remove(`hidden`);
       if (checkbox.checked) {
-        checkbox.closest(`li`).classList.add(`hidden`);
+        checkbox.parentElement.classList.add(`hidden`);
       }
     });
   }
   if (currentFilter.getAttribute(`id`) === `showAllBtn`) {
     checkboxes.forEach(checkbox => {
-      checkbox.closest(`li`).classList.remove(`hidden`);
+      checkbox.parentElement.classList.remove(`hidden`);
     });
   }
 }
